@@ -92,7 +92,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  char msg[] = "Enter a phrase: \n\r";
+  char msg[] = "Enter a phrase: ";
   char response[] = "You've entered: ";
   uint8_t returned_char;
   uint8_t index = 0;
@@ -102,7 +102,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  while(1)
+  {
+  HAL_Delay(500);
   HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+  index = 0;
   while (1)
   {
 
@@ -110,9 +115,11 @@ int main(void)
 
 	HAL_UART_Receive(&huart2, &returned_char, 1, HAL_MAX_DELAY);
 
+
 		if(returned_char == '\r')
 		{
 			rxBuffer[index] = '\0';
+
 			break;
 		}
 		else if(index < BUF_MAX - 1)
@@ -120,14 +127,17 @@ int main(void)
 			rxBuffer[index++] = returned_char;
 			HAL_UART_Transmit(&huart2, &returned_char, 1, HAL_MAX_DELAY);
 		}
-    /* USER CODE END WHILE */
   }
-
-    /* USER CODE BEGIN 3 */
   HAL_UART_Transmit(&huart2, (uint8_t*)"\r\n", 2, HAL_MAX_DELAY);
   HAL_UART_Transmit(&huart2, (uint8_t*)response, strlen(response), HAL_MAX_DELAY);
   HAL_UART_Transmit(&huart2, rxBuffer, index, HAL_MAX_DELAY);
   HAL_UART_Transmit(&huart2, (uint8_t*)"\r\n", 2, HAL_MAX_DELAY);
+    /* USER CODE END WHILE */
+
+  }
+
+    /* USER CODE BEGIN 3 */
+
   /* USER CODE END 3 */
 }
 
