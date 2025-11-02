@@ -1,0 +1,18 @@
+# STM32CubeIDE build artifacts
+/Debug/
+/Release/
+/build/
+/Core/Startup/*.lst
+*.o
+*.elf
+*.map
+
+# IDE settings (optional)
+.settings/
+.metadata/
+*.launch
+
+# OS junk
+.DS_Store
+Thumbs.db
+
